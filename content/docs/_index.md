@@ -1,5 +1,5 @@
 ---
-title : "Introduction"
+title: "Introduction"
 description: "TrueBlocks Docs"
 lead: ""
 date: 2020-10-06T08:48:23+00:00
@@ -12,91 +12,114 @@ draft: false
 images: []
 menu:
   docs:
-    parent: prologue
-weight: 0101
+    parent: technical
+weight: 0011
 toc: true
 ---
 
-<font color=red><b>Are you here for the OpenData Community Hackathon?</b></font>
+# Hyperdrive
 
-- [Install the docker version and download (or build) the Unchained Index](https://github.com/TrueBlocks/trueblocks-docker)
-- Tutorials:
-  - [Showing ERC20 transfers on the token contract](/blog/showing-erc-20-transfers/)
-  - [Listing contracts created by an address (including UniSwap)](https://tjayrush.medium.com/recipe-factories-ce78fa4c5f5b)
-  - [Monthly ERC20 token balance for one or more addresses](https://tjayrush.medium.com/recipe-monthly-token-balances-ff6a302fda80)
-  - [Calling into smart contracts with `chifra state`](https://tjayrush.medium.com/calling-smart-contracts-with-chifra-state-call-ea03b8d35ea7)
-  - [The Rent is Too Damn High](https://medium.com/coinmonks/the-rent-is-too-damn-high-part-i-dc6695b25259)
-  - [Commanding the Line](https://medium.com/coinmonks/commanding-the-line-ca5fe3496ae1)
+Hyperdrive is the next research leap from the Element team on variable and fixed rate primitives. _No preset expiration dates, no fragmented liquidity, and no LP rollovers, aka everlasting liquidity._
 
-<p><big><big>&#8593</big></big></p>
+## A New Way To Trade Rates
 
-------
-Are blockchains really meeting their promise?
+The hyperdrive AMM introduces a market sentiment indicator (MSI) for DeFi interest rates. Almost all DeFi interest rates are constantly changing ([sometimes by the block](https://github.com/element-fi/robrox/pull/6)). In order to gauge market sentiment, a balanced system of longs and shorts must exist between fixed and variable rates, in order to capture the wisdom of the crowd. Hyperdrive provides this. The fixed rate represented in Hyperdrive is the market sentiment indicator.
 
-## Problem Statement
+Hyperdrive lets users short or long the sentiment indicator. If a user thinks the sentiment indicator is too high, they'll go long because they like the fixed rate. If they think it is too low, they go short because they like the variable rate. Which side are you on?
 
-If you're like us, you fell in love with blockchains because of the promise they provide: world-wide, private, and permissionless
-access to the most accurate and agreed-upon data ever produced. Near perfect data.
+![](https://i.imgur.com/HrCb13e.png)
 
-But in reality, it's as if we're just lost at sea. Awash in bytes.
+## Overview
 
-<img src="/docs/img/steam-boat-off-a-harbor.jpg" alt="Who's stearing this boat?" width="500"/>
+Hyperdrive's new AMM provides the following for the DeFi space:
 
-## World-wide
+1. Terms on Demand
+2. Consolidated and Everlasting liquidity
+3. Longs and Shorts (symmetric market)
+4. Trading Strategy
+   - Multiplied Variable Rate Exposure
+   - Volatility Harvesting on interest rates
+   - Interest rate arbitrage (spread trades)
+   - Fixed rate borrow
+   - Spread borrow
+5. Technical Teaser
 
-Blockchains are supposed to be world-wide. Are they? Yes, they are.
+### 1. Terms On Demand
 
-## Permissionless
+Hyperdrive removes the concept of preset start and end dates. When a user chooses to trade on variable or fixed rates, the user starts their term, e.g. 6 months, on demand.
 
-Blockchains are supposed to be permissionless. Are they? Not really.
+The fixed rate in these terms is the market sentiment indicator reflecting the market's expected average variable rates over the term on an underlying yield source, like stEth.
 
-## Accurate
+Previously, a user would be forced to pick a market with a term set to a specific maturity date. This trends towards suboptimal LP fees and UX. For example, users likely do not have a lot of demand to trade on terms that have only 1 week remaining, because gains are lower. LPs tend to be incentivized to be in new terms, since fees are higher.
 
-Blockchains are supposed to be accurate. Are they? Well...on-chain they are, but
-off-chain, not even close. Ask any crypto-accountant.
+### 2. Consolidated and Everlasting Liquidity
 
-## Problem statement
+Previously, 6 month terms were deployed in a staggered manner. These staggered deployments lead to fragmented liquidity and required LPs to actively manage their position, rolling over their capital between different terms.
 
-It is true that anyone may send a transaction to a blockchain. All one needs is a wallet and access to an RPC...
-wait...access to an RPC...is that permissionless? Unless you're running your own node, no, it's not.
+In Hyperdrive, terms are created on demand using the liquidity from a single pool. As a result, liquidity provision is no longer tied to a specific term. When a user provides liquidity, they do so for all future terms created from the pool. Their liquidity has no expiration. It is everlasting. The LP continues to collect fees on each trade as well as variable interest on unallocated capital, for as long as they wish.
 
-It's worse than that. Not only must you ask permission to send a transaction, you must
-ask permission to see the results. "Please Mr. Massive Blockchain Explorer in the Sky...
-please may I see my transactions? Oh, and by the way, you're not watching me are you?"
+### 3. Longs and Shorts Determine Market Sentiment
 
-Worse even yet, have you ever actually tried to deeply understand what the blockchain explorer
-is showing you? And why, after paying hundreds of dollars, does you crypto tax report have
-massive, obvious errors?
+The Hyperdrive AMM gives users the ability to open both long and short positions on the market sentiment indicator, aka fixed rate.
 
-TrueBlocks can't solve the first problem -- eventually you're going to have to provide your
-own access if you want the true benefits of decentralization. Luckily there are emerging
-solutions such as [dAppNode](https://dappnode.io/) and [Avado](https://ava.do/).
+- When a user believes market sentiment is **too high**, they prefer to **long** the fixed rate. They believe the fixed rate is **higher** than their expectation of the variable rate for the term. This drives the fixed rate down.
+- When a user believes market sentiment is **too low**, they prefer to **short** the fixed rate. They believe the fixed rate is **lower** than their expectation of the variable rate for the term. This drives the fixed rate up.
 
-TrueBlocks can, however, solve the other two problems -- accurate, private access to your
-own transactions.
+Since Hyperdrive facilitates both longs and shorts, it fully captures market sentiment, letting the fixed rate reflect the market's beliefs.
 
----
-Like Infura, anyone may visit EtherScan. That is true. Both of those systems are kind enough to
-give us (give us!) whatever we ask for. But how long do you think it will take before they realize
-(hint: they've already have) how valuable their position in the ecosystem is? Do you think they're
-not paying attention to what you're doing? Do you think they're not connecting your Ethereum address
-to your IP address? I would be if I were them.
+Hyperdrive's approach doesn't require the use of funding rates or liquidation engines to remain solvent through volatile market conditions. Instead, all of the accounting and mathematics required to keep the system safe are baked into the AMM itself.
 
-Websites and APIs are inherently the wrong solution for decentralized data for a number of reasons:
+This creates a symmetrical market where users can drive the rates up and down as market sentiment changes, just like a game of flappy bird.
 
-1. They can see who you are because your browser tells them your IP address (not private!).
-2. Because their resources are shared among many users, they must protect their system by rate limiting you (not permissionless!)
-   1. They use your IP address to rate limit you - that is, they know who you are each time you arrive
-3. Every time you visit EtherScan or use Infura, you do it with the same Ethereum address
-4. They know who you are -- they know your address -- they know your spending habits -- that's terrible for you
+![Flappy Bird](https://i.imgur.com/W9QVOam.png)
 
-Websites and APIs are terrible for you. If you think your privacy is being invaded today, wait until you start
-telling them, with near perfect data, exactly what you spend your money on.
+### 4. Trading Strategies
 
-We all see this coming. No-one seems to want to do anything about it. In fact, we see an increasingly competitive
-environment to provide you ingress and egress to the chain.
+#### A. Multiplied Variable Rate Exposure
 
-## Solution
+Hyperdrive allows users to get as much variable exposure as they want by letting them borrow additional capital from the AMM at the current fixed rate and use it to open a short position.
 
-[dAppNode](https://dappnode.io/), [Erigon](https://github.com/ledgerwatch/erigon) and TrueBlocks.
+By opening a short position, the user is buying the variable yield from the market's deployed assets. Users can buy interest on a higher amount of capital than they provide. There are no liquidations, they just provide a maximum loss to ensure protocol safety. Unlike every other market, a Hyperdrive short does not face the possibility of unlimited loss.
 
+Because this position earns multiplied variable interest, it provides a stabilizing force encouraging the fixed rate to converge upon changes in the variable rate, otherwise Interest Rate Arbitrage exists.
+
+#### B. Interest Rate Arbitrage
+
+Hyperdrive's long/short mechanism allows for arbitrageurs to reap the benefit of volatile changes in interest rates from the market sentiment.
+
+=> Insert Graph PSM Rates
+
+As can be seen in this graph, Maker's PSM follows a stepwise function. As the PSM rate is changed, this allows for traders to quickly arbitrage the market sentiment to converge on the new rate.
+
+#### C. Volatility Harvesting on Interest Rates
+
+> Every user trade is met with an equal and opposite LP trade
+>
+> - Sir Isaac Newton
+
+For every trade that happens on the AMM, the LP takes on the other side. This means the LP will generally hold a position that is opposite to the market sentiment. Whether the market is right or wrong, all trades pay fees to the LP holders.
+
+Rates volatility attracts more trading, more fees, and more delusional activity from traders.
+
+No matter the volatility, at the end of a term, the average variable rate for that term is a single number. Any trading that moves the fixed rate away from this number represents an inaccurate market prediction, which the LP takes the other side of, thereby profiting.
+
+This means profit.
+
+#### D. Fixed rate borrow
+
+As described earlier, opening a short gives the user exposure to the variable rate of a position by purchasing that exposure at a fixed rate upfront. If a user pays a variable rate to borrow assets, they can use Hyperdrive to buy exposure to the variable lending rate on the same market for a fixed price. This hedges against changes in the variable rate and converts their variable rate borrow position into a fixed rate borrow position.
+
+#### E. Spread borrow
+
+If Hyperdrive positions are offered as collateral on a lending platform, a user can multiply their exposure if a spread exists between the borrow rate on the lending platform and the rate on Hyperdrive.
+
+For example, let's say Maker's PSM offers a DAI lending rate for fixed rate DAI as collateral. If the lending rate is lower than the Hyperdrive's fixed rate, then the user can continue to collateralize, borrow DAI, long the fixed rate, and repeat until the rates converge on each other. Similar results can happen if shorts are taken as collateral.
+
+## Technical Teaser
+
+![](https://i.imgur.com/aphOgTj.png)
+_Shut up and Hyperdrive_
+
+Hyperdrive is a natural extension of the concepts introduced in the first iteration of the [Element Protocol](https://paper.element.fi/) which implemented a customised version of the constant power sum curve invariant from the seminal [YieldSpace](https://yield.is/YieldSpace.pdf) paper. Optimised for fixed rate trading, this curve's main benefit is curvature that adjusts with the passage of time.
+
+Changing curvature of trading curves can be dangerous for protocol safety, as evidenced by the [Curve hack](https://medium.com/@peter_4205/curve-vulnerability-report-a1d7630140ec). Similar attacks are possible in a multi-curvature multi-term universe. The Hyperdrive solution does away with multiple curves, instead reflecting the passage of time in each position, an approach we're deeming "flat + curve". Each position is the sum of matured and unmatured portions.

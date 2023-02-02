@@ -2,21 +2,21 @@
 
 ## Homepage
 description = "Ethereum as it was meant to be: local-first, P2P, and accurate queries to all the data you’ll ever need."
-title = "TrueBlocks"
+title = "Elf Docs"
 titleAddition = "Light, local index of the Ethereum blockchain"
 titleSeparator = "-"
 
 ## Open Graph + Twitter Cards
 images = ["https://trueblocks.io/trueblocks.png"]
 ogLocale = "en_US"
-twitterCreator = "TrueBlocks"
-twitterSite = "TrueBlocks"
+twitterCreator = "ElfDocs"
+twitterSite = "ElfDocs"
 
 ## JSON-LD
-schemaGitHub = "https://github.com/TrueBlocks/trueblocks-core"
+schemaGitHub = "https://github.com/element-fi"
 schemaLogo = "logo-doks.png"
 schemaSection = "blog"
-schemaTwitter = "https://twitter.com/trueblocks"
+schemaTwitter = "https://twitter.com/element_fi"
 schemaType = "Organization"
 
 ## Sitelinks Search Box
@@ -36,7 +36,7 @@ quality = 85
 footer = "Powered by <a href=\"https://gohugo.io/\">Hugo</a>"
 
 # Edit Page
-docsRepo = "https://github.com/TrueBlocks/trueblocks-docs"
+docsRepo = "https://github.com/wakamex/elf-docs"
 editPage = true
 
 [options]
